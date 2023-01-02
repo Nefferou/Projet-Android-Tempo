@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tempo_color_text_size">28sp</dimen>
+    <dimen name="tempo_days_left_text_size">24sp</dimen>
+</resources>

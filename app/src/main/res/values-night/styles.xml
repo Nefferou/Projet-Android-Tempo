@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.Theme.B3TempoApp2022.DayColorView" parent="">
+        <item name="android:background">@color/gray_600</item>
+        <item name="dayCircleColor">@color/tempo_undecided_day_bg</item>
+    </style>
+</resources>
