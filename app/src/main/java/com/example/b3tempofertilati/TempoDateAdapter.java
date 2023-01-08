@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b3tempofertilati.databinding.TempoDateItemBinding;
+
 import java.util.List;
 
 public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.TempoDateViewHolder> {
@@ -18,16 +20,12 @@ public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.Temp
     private Context context;
 
     public class TempoDateViewHolder extends RecyclerView.ViewHolder {
-        private TextView dateTv;
-        private FrameLayout colorFl;
+        TempoDateItemBinding binding ;
 
-
-        public TempoDateViewHolder(View view) {
-            super(view);
-            dateTv = itemView.findViewById(R.id.date_tv);
-            colorFl = itemView.findViewById(R.id.color_fl);
+        public TempoDateViewHolder(@NonNull TempoDateItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding ;
         }
-
     }
 
     public TempoDateAdapter(List<TempoDate> tempoDates, Context context){
@@ -37,14 +35,16 @@ public class TempoDateAdapter extends RecyclerView.Adapter<TempoDateAdapter.Temp
     @NonNull
     @Override
     public TempoDateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tempo_date_item,parent,false);
-        return new TempoDateViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tempo_date_item, parent,false);
+        TempoDateItemBinding binding = TempoDateItemBinding.bind(v);
+
+        return new TempoDateViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TempoDateViewHolder holder, int position) {
-        holder.dateTv.setText(tempoDates.get(position).getDate());
-        holder.colorFl.setBackgroundColor(ContextCompat.getColor(context,tempoDates.get(position).getCouleur().getResId()));
+        holder.binding.dateTv.setText(tempoDates.get(position).getDate());
+        holder.binding.colorFl.setBackgroundColor(ContextCompat.getColor(context,tempoDates.get(position).getCouleur().getResId()));
     }
 
 

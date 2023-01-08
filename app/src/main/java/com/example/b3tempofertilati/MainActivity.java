@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static IEdfApi edfApi;
+    public String currentDate = Tools.getNowDate("yyyy-MM-dd");
     ActivityMainBinding binding;
 
     @Override
@@ -41,8 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.e(LOG_TAG, "unable to initialize Retrofit client");
             finish();
         }
+    }
 
-        // Create call to getTempoDaysLeft
+    public void getTempoDaysLeft() {
+
         Call<TempoDaysLeft> call = edfApi.getTempoDaysLeft(IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call.enqueue(new Callback<TempoDaysLeft>() {
@@ -67,17 +70,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        // Call to getTempoDaysColor
+    }
+
+    public void getTempoDaysColor() {
+
         Call<TempoDaysColor> call2;
-        call2 = edfApi.getTempoDaysColor("2022-12-12",IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
+        call2 = edfApi.getTempoDaysColor(currentDate,IEdfApi.EDF_TEMPO_API_ALERT_TYPE);
 
         call2.enqueue(new Callback<TempoDaysColor>() {
             @Override
             public void onResponse(@NonNull Call<TempoDaysColor> call, @NonNull Response<TempoDaysColor> response) {
                 TempoDaysColor tempoDaysColor = response.body();
                 if (response.code() == HttpURLConnection.HTTP_OK && tempoDaysColor != null) {
-                    Log.d(LOG_TAG,"Today color = " + tempoDaysColor.getCouleurJourJ().toString());
-                    Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1().toString());
+                    Log.d(LOG_TAG,"Today color = "+tempoDaysColor.getCouleurJourJ());
+                    Log.d(LOG_TAG,"Tomorrow color = "+tempoDaysColor.getCouleurJourJ1());
                     binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
                     binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
                 } else {
@@ -92,11 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-  /*  public void showHistory(View view) {
-        Intent intent = new Intent();
-        intent.setClass(this,HistoryActivity.class);
-        startActivity(intent);
-    } */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Create call to getTempoDaysLeft
+        getTempoDaysLeft();
+        // Call to getTempoDaysColor
+        getTempoDaysColor();
+    }
 
     @Override
     public void onClick(View v) {
