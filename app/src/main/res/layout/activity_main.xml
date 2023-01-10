@@ -100,18 +100,58 @@
         app:layout_constraintStart_toEndOf="@+id/white_days_tv"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
+    <TextView
+        android:id="@+id/color_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempo_undecided_color_text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/tempo_color_text_size"
+        android:layout_marginBottom="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/tomorrow_dcv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/color_tomorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tempo_undecided_color_text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/tempo_color_text_size"
+        android:layout_marginBottom="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
     <Button
         android:id="@+id/history_bt"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="192dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="HistoryOne"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/history_bt_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/white_days_tv" />
+
+    <Button
+        android:id="@+id/history_bt_2"
+        android:layout_width="192dp"
+        android:layout_height="62dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="HistoryTwo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/white_days_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/white_days_tv"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
