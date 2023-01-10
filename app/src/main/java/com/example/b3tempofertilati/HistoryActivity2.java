@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HistoryActivity2 extends AppCompatActivity {
-    private static final String LOG_TAG = HistoryActivity.class.getSimpleName();
+    private static final String LOG_TAG = HistoryActivity2.class.getSimpleName();
 
     // Init views
     ActivityHistory2Binding binding;
@@ -42,10 +42,10 @@ public class HistoryActivity2 extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Init recycler view
-        binding.tempoHistoryRv2.setHasFixedSize(true);
-        binding.tempoHistoryRv2.setLayoutManager(new LinearLayoutManager(this));
+        binding.tempoHistory2.setHasFixedSize(true);
+        binding.tempoHistory2.setLayoutManager(new LinearLayoutManager(this));
         tempoDateAdapter = new TempoDateAdapter(tempoDates, this);
-        binding.tempoHistoryRv2.setAdapter(tempoDateAdapter);
+        binding.tempoHistory2.setAdapter(tempoDateAdapter);
 
         if (edfApi != null) {
             updateTempoHistory();
@@ -57,6 +57,7 @@ public class HistoryActivity2 extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.years_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinner.setAdapter(adapter);
+
     }
 
     private void updateTempoHistory() {
