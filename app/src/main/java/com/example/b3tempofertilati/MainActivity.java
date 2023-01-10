@@ -14,6 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.b3tempofertilati.IEdfApi;
@@ -115,12 +117,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(LOG_TAG,"Tomorrow color = " + tempoDaysColor.getCouleurJourJ1().toString());
                     //checkColor4Notif(tempoDaysColor.getCouleurJourJ1());
 
+                    binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
+                    binding.todayDcv.addColorString(getString(tempoDaysColor.getCouleurJourJ().getStringResId()));
+                    binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
+                    binding.tomorrowDcv.addColorString(getString(tempoDaysColor.getCouleurJourJ1().getStringResId()));
 
-                    binding.colorToday.setText(tempoDaysColor.getCouleurJourJ().toString());
+                    /*binding.colorToday.setText(tempoDaysColor.getCouleurJourJ().toString());
                     binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ());
 
                     binding.colorTomorrow.setText(tempoDaysColor.getCouleurJourJ1().toString());
-                    binding.todayDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());
+                    binding.tomorrowDcv.setDayCircleColor(tempoDaysColor.getCouleurJourJ1());*/
 
                 } else {
                     Log.w(LOG_TAG, "call to getTempoDaysColor() failed with error code " + response.code());

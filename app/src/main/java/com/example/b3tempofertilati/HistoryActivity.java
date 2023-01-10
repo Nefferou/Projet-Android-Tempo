@@ -37,40 +37,59 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHistoryBinding.inflate(getLayoutInflater());
+        //setContentView(R.layout.activity_history);
+        setContentView(binding.getRoot());
 
         // Init recycler view
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
         tempoDateAdapter = new TempoDateAdapter(tempoDates, this);
         binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
+
+        if (edfApi != null) {
+            updateTempoHistory();
+        } else {
+            Log.e(LOG_TAG, "Unable to init Retrofit client");
+            finish();
+        }
+
     }
 
-    public void getTempoHistory() {
-        Call<TempoHistory> call = edfApi.getTempoHistory("2021", "2022");
+    private void updateTempoHistory() {
+
+        String yearNow = Tools.getNowDate("yyyy");
+        String yearBefore = "";
+        try {
+            yearBefore = String.valueOf(Integer.parseInt(yearNow) - 1);
+        } catch (NumberFormatException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+
+        // Create call to getTempoHistory
+        Call<TempoHistory> call = edfApi.getTempoHistory(yearBefore, yearNow);
+
+        binding.tempoHistoryPb.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<TempoHistory>() {
             @Override
-            public void onResponse(Call<TempoHistory> call, Response<TempoHistory> response) {
+            public void onResponse(@NonNull Call<TempoHistory> call, @NonNull Response<TempoHistory> response) {
                 tempoDates.clear();
                 if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null) {
                     tempoDates.addAll(response.body().getTempoDates());
-                    Log.d(LOG_TAG, "nb elements = " + tempoDates.size());
-                    binding.tempoHistoryPb.setVisibility(View.GONE);
+                    Log.d(LOG_TAG,"nb elements = " + tempoDates.size());
+                } else {
+                    Log.e(LOG_TAG,"Call to getTempoHistoy() returned error code " + response.code());
                 }
                 tempoDateAdapter.notifyDataSetChanged();
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<TempoHistory> call, Throwable t) {
+            public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
+                Log.e(LOG_TAG,"Call to getTempoHistoy() failed");
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        binding.tempoHistoryPb.setVisibility(View.VISIBLE);
-        if(edfApi != null) {
-            getTempoHistory();
-        }
-    }
 }

@@ -18,4 +18,13 @@
     <string name="tempo_blue_color_text">bleu</string>
     <string name="tempo_undecided_color_text">indéterminé</string>
 
+    <string-array name="years_array">
+        <item>2023</item>
+        <item>2022</item>
+        <item>2021</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2018</item>
+    </string-array>
+
 </resources>
